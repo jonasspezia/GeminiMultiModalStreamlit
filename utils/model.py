@@ -7,7 +7,7 @@ import datetime
 
 def load_model(type, schemaType):
   load_dotenv()
-  genai.configure(api_key=os.getenv('API_KEY'))
+  genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
   if type is not None and schemaType is not None:
       # Configuration when both type and schemaType are provided
       generation_config = GenerationConfig(
@@ -29,7 +29,8 @@ def load_model(type, schemaType):
           max_output_tokens=8192
       )
   
-  model_name = os.getenv('MODEL')
+  # Default model is latest Gemini 1.5 Pro
+  model_name = os.getenv('MODEL', 'gemini-1.5-pro-latest')
   model = genai.GenerativeModel(model_name=model_name, generation_config=generation_config)
   return model
 
@@ -37,7 +38,7 @@ def load_model(type, schemaType):
 def load_cached_content_model(contents, display_name, system_instruction, ttl_minutes=5):
   print('loading cached content model')
   load_dotenv() 
-  genai.configure(api_key=os.getenv('API_KEY'))
+  genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
   # Create a cache with the specified TTL
   cache = caching.CachedContent.create(
       model=os.getenv('CACHING_MODEL'),
@@ -50,4 +51,3 @@ def load_cached_content_model(contents, display_name, system_instruction, ttl_mi
   # Construct a GenerativeModel which uses the created cache.
   model = genai.GenerativeModel.from_cached_content(cached_content=cache)
   return model
-

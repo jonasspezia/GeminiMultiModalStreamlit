@@ -17,8 +17,8 @@ from utils.util import upload_file_to_gemini
 import google.generativeai as genai
 
 def main():
-  st.set_page_config(page_title="Gemini Multimodal", layout="wide")
-  st.title("Gemini Multimodal Application")
+  st.set_page_config(page_title="LaciaVisionLLM", layout="wide")
+  st.title("LaciaVisionLLM")
 
   # Tab selection using radio
   tab = st.radio("", ["Video", "Image", "Audio", "File API"], horizontal=True)
